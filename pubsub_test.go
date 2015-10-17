@@ -1,7 +1,7 @@
 package pubsub_test
 
 import (
-	"github.com/mattn/go-pubsub"
+	"github.com/xtaci/go-pubsub"
 	"testing"
 	"time"
 )

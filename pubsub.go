@@ -21,7 +21,6 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
-	"runtime"
 	"sync"
 )
 
@@ -118,14 +117,7 @@ func (ps *PubSub) Sub(f interface{}) error {
 
 // Leave unsubscribe to the PubSub.
 func (ps *PubSub) Leave(f interface{}) {
-	var fp uintptr
-	if f == nil {
-		if pc, _, _, ok := runtime.Caller(1); ok {
-			fp = runtime.FuncForPC(pc).Entry()
-		}
-	} else {
-		fp = reflect.ValueOf(f).Pointer()
-	}
+	fp := reflect.ValueOf(f).Pointer()
 	ps.m.Lock()
 	defer ps.m.Unlock()
 	result := make([]*wrap, 0, len(ps.w))
